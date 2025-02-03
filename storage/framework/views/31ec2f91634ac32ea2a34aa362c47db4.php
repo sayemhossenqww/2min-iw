@@ -1,0 +1,1 @@
+<div class="form-text"><?php echo e($slot); ?></div><?php /**PATH C:\wamp64\www\button\resources\views/components/form-text.blade.php ENDPATH**/ ?>

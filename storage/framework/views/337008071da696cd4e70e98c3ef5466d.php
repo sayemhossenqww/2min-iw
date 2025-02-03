@@ -1,0 +1,1 @@
+<div class="form-text"><?php echo e($slot); ?></div><?php /**PATH C:\Users\Sayem Hossen\Downloads\phpdesktop-chrome-130.1-php-8.3\phpdesktop-chrome-130.1-php-8.3\www\resources\views/components/form-text.blade.php ENDPATH**/ ?>
