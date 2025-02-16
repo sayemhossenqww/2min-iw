@@ -270,6 +270,7 @@
         </div>
     </div>
 @endisset
+
 @push('script')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -279,140 +280,128 @@
         });
         
         function printBarCode(value) {
-            value = $(`input[name=${value}]`).val();
-            cost = $(`input[name="cost"]`).val();
-            size = $(`input[name="size"]`).val();
-            description = $('textarea[name="description"]').val();
-            color = $(`input[name="color"]`).val();
+    value = $(`input[name=${value}]`).val();
+    cost = $(`input[name="cost"]`).val();
+    size = $(`input[name="size"]`).val();
+    description = $('textarea[name="description"]').val();
+    color = $(`input[name="color"]`).val();
 
-            let htmlContent = `
-                <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Print Barcode</title>
-                        <style>
-                            @media print {
-                                @page {
-                                    size: 6cm 6cm; /* Increase the label size */
-                                    margin: 0; /* No margins for full-bleed label */
-                                }
+    let htmlContent = `
+        <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Print Barcode</title>
+                <style>
+                    @media print {
+                        @page {
+                            size: 6cm 3cm; /* Set the exact label size */
+                            margin: 0;
+                        }
 
-                                body, html {
-                                    margin: 0;
-                                    padding: 0;
-                                    width: 6cm;
-                                    height: 6cm;
-                                    overflow: hidden;
-                                }
+                        body, html {
+                            margin: 0;
+                            padding: 0;
+                            width: 6cm;
+                            height: 3cm;
+                            overflow: hidden;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
 
-                                .label {
-                                    width: 6cm;
-                                    height: 6cm;
-                                    display: flex;
-                                    flex-direction: column;
-                                    align-items: center;
-                                    justify-content: space-between;
-                                    padding: 0.2cm;
-                                    box-sizing: border-box;
-                                    text-align: center;
-                                }
+                        .label {
+                            width: 6cm;
+                            height: 3cm;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0.2cm;
+                            box-sizing: border-box;
+                            text-align: center;
+                            border: 1px solid black; /* Optional for visualization */
+                        }
 
-                                .barcode-image {
-                                    width: 5cm; /* Centered barcode width */
-                                    height: 2.5cm; /* Adjust height */
-                                    text-align: center;
-                                }
+                        .barcode-image {
+                            width: 5.5cm;
+                            height: 1.2cm;
+                        }
 
-                                .top-row {
-                                    width: 100%;
-                                    display: flex;
-                                    justify-content: space-between;
-                                    font-size: 0.7cm;
-                                    font-weight: bold;
-                                }
+                        .description {
+                            font-size: 0.5cm;
+                            font-weight: bold;
+                        }
 
-                                .description {
-                                    margin-top: 0.5cm;
-                                    font-size: 0.6cm;
-                                    text-align: center;
-                                }
-                            }
+                        .details {
+                            font-size: 0.4cm;
+                            display: flex;
+                            justify-content: space-between;
+                            width: 100%;
+                        }
+                    }
 
-                            .label {
-                                width: 6cm;
-                                height: 6cm;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: space-between;
-                                padding: 0.2cm;
-                                box-sizing: border-box;
-                                text-align: center;
-                            }
+                    body, html {
+                        width: 6cm;
+                        height: 3cm;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0;
+                        padding: 0;
+                    }
 
-                            .barcode-image {
-                                width: 5cm; /* Centered barcode width */
-                                height: 2.5cm; /* Adjust height */
-                            }
+                    .label {
+                        width: 6cm;
+                        height: 3cm;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0.2cm;
+                        box-sizing: border-box;
+                        text-align: center;
+                    }
 
-                            .top-row {
-                                width: 100%;
-                                display: flex;
-                                justify-content: space-between;
-                                font-size: 16px;
-                                font-weight: bold;
-                                padding-top:-10px;
-                            }
+                    .barcode-image {
+                        width: 5.5cm;
+                        height: 1.2cm;
+                    }
 
-                            .description {
-                                margin-top: 0.5cm;
-                                font-size: 16px;
-                                text-align: center;
-                            }
-                            .size{
-                                
-                            }
-                            .color{
-                              
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="label">
-                            <table>
-                                <tr>
-                                    <td colspan="3" align="center" style="width:100%;font-size:16px;"><b>${description}</b></td>
-                                </tr>
-                            
-                                <tr>
-                                    <td colspan="3" align="center" style="width:100%;">
-                                    <img 
-                                        src="https://barcode.orcascan.com/?type=code128&format=png&data=${value}" 
-                                        alt="Barcode"
-                                        class="barcode-image"
-                                    />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="font-size:16px; display: flex; justify-content: space-between;">
-                                            <span><b>Size: ${size}</b></span>
-                                            <span><b>Price: $${cost}</b></span>
-                                        </div>
-                                    </td>
+                    .description {
+                        font-size: 12px;
+                        font-weight: bold;
+                    }
 
-                                </tr>
-                            </table>
-                    
-                        </div>
-                    </body>
-                </html>
-            `;
+                    .details {
+                        font-size: 10px;
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="label">
+                    <div class="description">${description}</div>
+                    <img 
+                        src="https://barcode.orcascan.com/?type=code128&format=png&data=${value}" 
+                        alt="Barcode"
+                        class="barcode-image"
+                    />
+                    <div class="details">
+                        <span><b>Size: ${size}</b></span>
+                        <span><b>Price: $${cost}</b></span>
+                    </div>
+                </div>
+            </body>
+        </html>
+    `;
 
-            let myWindow = window.open("", "BarCodeWindow2", "width=600px; height=800px;");
-            myWindow.document.write(htmlContent);
-        }
+    let myWindow = window.open("", "BarCodeWindow2", "width=480, height=240");
+    myWindow.document.write(htmlContent);
+}
+
 
     </script>
 @endpush

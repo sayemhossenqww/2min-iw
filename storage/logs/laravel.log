@@ -79,3 +79,4 @@
 #38 /Users/sayemh/Downloads/2miniw 2/bin/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #39 {main}
 "} 
+[2025-02-11 13:20:13] production.INFO: message ["dfdfd",null] 
